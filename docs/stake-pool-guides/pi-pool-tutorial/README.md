@@ -22,7 +22,7 @@ The [Pi-Node.img.gz](https://mainnet.adamantium.online/Pi-Node.img.gz) is a pre 
 
 :::caution
 
-It is strongly recommended to work through the [Stake Pool School](https://cardano-foundation.gitbook.io/stake-pool-course/) course presented by the Cardano Foundation.
+It is strongly recommended to work through the [Cardano Course](https://cardano-course.gitbook.io/cardano-course/) presented by IOG, or the [SPO documentation](https://developers.cardano.org/docs/operate-a-stake-pool/) on the Cardano Developer Portal.
 
 :::
 

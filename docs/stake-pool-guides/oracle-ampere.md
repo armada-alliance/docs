@@ -121,7 +121,8 @@ Install Packages to build and run cardano-node/cardano-cli.
 sudo apt install build-essential libssl-dev tcptraceroute python3-pip flex \
     make automake unzip net-tools pkg-config g++ bison \
     libffi-dev libgmp-dev libssl-dev libtinfo-dev libsystemd-dev autoconf \
-    zlib1g-dev libncursesw5 llvm-12 numactl libnuma-dev libtool -y
+    zlib1g-dev libncursesw5 llvm-12 numactl libnuma-dev libtool \
+    liburing-dev protobuf-compiler libsnappy-dev -y
 ```
 
 ### Chrony
@@ -251,12 +252,12 @@ which jq
 
 ## Build Libsodium
 
-This is IOHK's fork of Libsodium. It is needed for the dynamic build binary of cardano-node.
+This is Intersect's fork of Libsodium. It is needed for the dynamic build binary of cardano-node.
 
 ```bash title=">_ Terminal"
 mkdir -p $HOME/git
 cd $HOME/git
-git clone https://github.com/input-output-hk/libsodium
+git clone https://github.com/IntersectMBO/libsodium
 cd libsodium
 git checkout 66f017f1
 ./autogen.sh
@@ -309,11 +310,11 @@ curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 ```bash title=">_ Terminal"
 . ~/.bashrc
 ghcup upgrade
-ghcup install cabal 3.6.2.0
-ghcup set cabal 3.6.2.0
+ghcup install cabal 3.12.1.0
+ghcup set cabal 3.12.1.0
 
-ghcup install ghc 8.10.7
-ghcup set ghc 8.10.7
+ghcup install ghc 9.6.7
+ghcup set ghc 9.6.7
 ```
 
 Confirm.
@@ -327,20 +328,19 @@ ghc --version
 
 ```bash title=">_ Terminal"
 cd $HOME/git
-git clone https://github.com/input-output-hk/cardano-node.git
+git clone https://github.com/IntersectMBO/cardano-node.git
 cd cardano-node
 git fetch --all --recurse-submodules --tags
-git checkout $(curl -s https://api.github.com/repos/input-output-hk/cardano-node/releases/latest | jq -r .tag_name)
+git checkout $(curl -s https://api.github.com/repos/IntersectMBO/cardano-node/releases/latest | jq -r .tag_name)
 ```
 
-Configure with 8.10.7 set libsodium.
+Configure with GHC 9.6.
 
 ```bash title=">_ Terminal"
-cabal configure -O0 -w ghc-8.10.7
+cabal configure -O0 -w ghc-9.6.7
 
-echo -e "package cardano-crypto-praos\n flags: -external-libsodium-vrf" > cabal.project.local
 sed -i $HOME/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
-rm -rf dist-newstyle/build/aarch64-linux/ghc-8.10.7
+rm -rf dist-newstyle/build/aarch64-linux/ghc-9.6.7
 ```
 
 Build cardano-cli, cardano-node, cardano-submit-api and bech32.

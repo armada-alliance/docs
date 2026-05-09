@@ -68,7 +68,7 @@ Edit the topology file on the relays. The nodes only share block headers in P2P.
       "advertise": true
     }
   ],
-  "useLedgerAfterSlot": 79387772
+  "useLedgerAfterSlot": 185500763
 }
 ```
 

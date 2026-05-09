@@ -107,8 +107,7 @@ npm init -y #creates package.json)
 npm install cardanocli-js --save
 ```
 
-1. **Copy the Cardano node genesis latest build number from the IOHK hydra website**
-   - [https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/index.html](https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/index.html)
+1. **Download the Cardano node genesis file from the Cardano Book**
 2. **Create a bash shell script to Download the latest Genesis config file needed**
 
 ```bash title=">_ Terminal"
@@ -119,8 +118,7 @@ nano fetch-config.sh
 <TabItem value="testnet" label="TESTNET">
 
 ```bash title=">_ Terminal"
-echo export NODE_BUILD_NUM=$(curl https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g') >> $HOME/.bashrc
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/testnet-shelley-genesis.json
+wget -N https://book.world.dev.cardano.org/environments/preprod/shelley-genesis.json -O testnet-shelley-genesis.json
 ```
 
 </TabItem>
@@ -128,8 +126,7 @@ wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/testnet-shelley
 <TabItem value="mainnet" label="MAINNET">
 
 ```bash title=">_ Terminal"
-echo export NODE_BUILD_NUM=$(curl https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g') >> $HOME/.bashrc
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/mainnet-shelley-genesis.json
+wget -N https://book.world.dev.cardano.org/environments/mainnet/shelley-genesis.json -O mainnet-shelley-genesis.json
 ```
 
 </TabItem>
@@ -152,7 +149,7 @@ nano cardano.js
 
 :::info
 
-If you are using testnet make sure you have the correct testnet-magic version number. You can find the current testnet version [here](https://hydra.iohk.io/build/7926804/download/1/testnet-shelley-genesis.json) or simply look in your <span style={{color: 'blue'}}>testnet-shelley-genesis.json</span> file in your cardano node directory.
+If you are using testnet make sure you have the correct testnet-magic version number. You can find the current testnet version [here](https://book.world.dev.cardano.org/environments/preprod/shelley-genesis.json) or simply look in your <span style={{color: 'blue'}}>testnet-shelley-genesis.json</span> file in your cardano node directory.
 
 :::
 

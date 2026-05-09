@@ -463,18 +463,17 @@ echo export NODE_FILES=$\{%HOME}/pi-pool/files >> $\{%HOME}/.adaenv
 echo export TOPOLOGY='$\{%NODE_FILES}'/'$\{%NODE_CONFIG}'-topology.json >> $\{%HOME}/.adaenv
 echo export DB_PATH='$\{%NODE_HOME}'/db >> $\{%HOME}/.adaenv
 echo export CONFIG='$\{%NODE_FILES}'/'$\{%NODE_CONFIG}'-config.json >> $\{%HOME}/.adaenv
-echo export NODE_BUILD_NUM=$(curl https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g') >> $\{%HOME}/.adaenv
 echo export CARDANO_NODE_SOCKET_PATH="$\{%HOME}/pi-pool/db/socket" >> $\{%HOME}/.adaenv
 source $\{%HOME}/.bashrc; source $\{%HOME}/.adaenv
 ```
 
 ### Build Libsodium
 
-This is IOHK's fork of Libsodium. It is needed for the dynamic build binary of cardano-node.
+This is Intersect's fork of Libsodium. It is needed for the dynamic build binary of cardano-node.
 
 ```bash title=">_ Terminal"
 cd; cd git/
-git clone https://github.com/input-output-hk/libsodium
+git clone https://github.com/IntersectMBO/libsodium
 cd libsodium
 git checkout 66f017f1
 ./autogen.sh
@@ -501,12 +500,14 @@ sudo ldconfig; ldconfig -p | grep libsodium
 
 ```bash title=">_ Terminal"
 cd $NODE_FILES
-wget -N https://hydra.iohk.io/build/$\{%NODE_BUILD_NUM}/download/1/$\{%NODE_CONFIG}-config.json
-wget -N https://hydra.iohk.io/build/$\{%NODE_BUILD_NUM}/download/1/$\{%NODE_CONFIG}-byron-genesis.json
-wget -N https://hydra.iohk.io/build/$\{%NODE_BUILD_NUM}/download/1/$\{%NODE_CONFIG}-shelley-genesis.json
-wget -N https://hydra.iohk.io/build/$\{%NODE_BUILD_NUM}/download/1/$\{%NODE_CONFIG}-alonzo-genesis.json
-wget -N https://hydra.iohk.io/build/$\{%NODE_BUILD_NUM}/download/1/$\{%NODE_CONFIG}-topology.json
-wget -N https://raw.githubusercontent.com/input-output-hk/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
+BASE_URL="https://book.world.dev.cardano.org/environments/$\{%NODE_CONFIG}"
+wget -N ${BASE_URL}/config.json && mv config.json $\{%NODE_CONFIG}-config.json
+wget -N ${BASE_URL}/byron-genesis.json && mv byron-genesis.json $\{%NODE_CONFIG}-byron-genesis.json
+wget -N ${BASE_URL}/shelley-genesis.json && mv shelley-genesis.json $\{%NODE_CONFIG}-shelley-genesis.json
+wget -N ${BASE_URL}/alonzo-genesis.json && mv alonzo-genesis.json $\{%NODE_CONFIG}-alonzo-genesis.json
+wget -N ${BASE_URL}/conway-genesis.json && mv conway-genesis.json $\{%NODE_CONFIG}-conway-genesis.json
+wget -N ${BASE_URL}/topology.json && mv topology.json $\{%NODE_CONFIG}-topology.json
+wget -N https://raw.githubusercontent.com/IntersectMBO/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
 ```
 
 Run the following to modify $\{%NODE\_CONFIG}-config.json and update TraceBlockFetchDecisions to "true" & listen on all interfaces with Prometheus Node Exporter.

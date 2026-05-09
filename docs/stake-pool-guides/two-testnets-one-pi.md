@@ -79,7 +79,7 @@ export NODE_CONFIG=testnet
 export NODE_HOME=/home/ubuntu/preview-pool
 export NODE_PORT=3000
 export NODE_FILES=/home/ubuntu/preview-pool/files
-export NODE_BUILD_NUM=9746151
+
 export CARDANO_NODE_SOCKET_PATH=/home/ubuntu/preview-pool/db/socket
 export TOPOLOGY=${NODE_FILES}/topology.json
 export DB_PATH=${NODE_HOME}/db
@@ -110,7 +110,7 @@ export NODE_CONFIG=testnet
 export NODE_HOME=/home/ubuntu/preprod-pool
 export NODE_PORT=3001
 export NODE_FILES=/home/ubuntu/preprod-pool/files
-export NODE_BUILD_NUM=9746151
+
 export CARDANO_NODE_SOCKET_PATH=/home/ubuntu/preprod-pool/db/socket
 export TOPOLOGY=${NODE_FILES}/topology.json
 export DB_PATH=${NODE_HOME}/db
@@ -343,8 +343,7 @@ or just download a set of statically linked binaries built by the Armada allianc
 
 ```bash title=">_ Terminal"
 cd ${HOME}/tmp
-wget -O 8_1_1.zip https://github.com/armada-alliance/cardano-node-binaries/blob/main/static-binaries/8_1_1.zip?raw=true
-unzip 8_1_1.zip
+wget -c https://github.com/armada-alliance/cardano-node-binaries/blob/main/static-binaries/cardano-10_7_1-aarch64-static-musl-ghc_9122.tar.zst?raw=true -O - | tar -I zstd -xv
 mv cardano-node/* ${HOME}/.local/bin
 ```
 Confirm Binaries are in $PATH.

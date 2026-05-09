@@ -212,24 +212,19 @@ Replace `<tag>` with the latest tag in the next command.
 ## Installing/Upgrading the 'cardano-node' and 'cardano-cli' static binaries (AlpineOS uses static binaries almost exclusively so avoid non-static builds)
 
 :::info
-**You may obtain the static binaries for version 1.33.0 via this** [**link** ](https://github.com/armada-alliance/cardano-node-binaries)**thanks to Moritz Angermann, the SPO of ZW3RK pool 🙏**
+**Obtain the latest aarch64 static binaries from the [Armada Alliance GitHub repository](https://github.com/armada-alliance/cardano-node-binaries). The current mainnet-compatible release is 10.7.1.**
 :::
 
-**Run the following commands to download and install the binaries into the correct directory.**
-
-* Download the binaries
+**Install `zstd` if not already present, then download and extract directly into the correct directory.**
 
 ```
-wget -O ~/aarch64-unknown-linux-musl-cardano-node-1.35.0.zip https://github.com/armada-alliance/cardano-node-binaries/blob/main/static-binaries/1_35_0.zip?raw=true
+sudo apk add zstd
 ```
 
-* Unzip and install the binaries via the commands
-
 ```
-    unzip -d ~/ aarch64-unknown-linux-musl-cardano-node-1.35.0.zip
-    sudo mv ~/cardano-node/* /usr/local/bin/
-    
-    rm -r ~/cardano-node
+wget -c https://github.com/armada-alliance/cardano-node-binaries/blob/main/static-binaries/cardano-10_7_1-aarch64-static-musl-ghc_9122.tar.zst?raw=true -O - | tar -I zstd -xv
+sudo mv ~/cardano-node/* /usr/local/bin/
+rm -r ~/cardano-node
 ```
 
 ## Install the Armada Alliance Alpine Linux Cardano node service

@@ -414,7 +414,6 @@ echo export NODE_FILES=${HOME}/pi-pool/files >> ${HOME}/.adaenv
 echo export TOPOLOGY='${NODE_FILES}'/'${NODE_CONFIG}'-topology.json >> ${HOME}/.adaenv
 echo export DB_PATH='${NODE_HOME}'/db >> ${HOME}/.adaenv
 echo export CONFIG='${NODE_FILES}'/'${NODE_CONFIG}'-config.json >> ${HOME}/.adaenv
-echo export NODE_BUILD_NUM=$(curl https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/index.html | grep -e "build" | sed 's/.*build\/\([0-9]*\)\/download.*/\1/g') >> ${HOME}/.adaenv
 echo export CARDANO_NODE_SOCKET_PATH="${HOME}/pi-pool/db/socket" >> ${HOME}/.adaenv
 source ${HOME}/.bashrc; source ${HOME}/.adaenv
 ```
@@ -423,12 +422,14 @@ source ${HOME}/.bashrc; source ${HOME}/.adaenv
 
 ```bash
 cd $NODE_FILES
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-config.json
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-byron-genesis.json
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-shelley-genesis.json
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-alonzo-genesis.json
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-topology.json
-wget -N https://raw.githubusercontent.com/input-output-hk/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
+BASE_URL="https://raw.githubusercontent.com/IntersectMBO/cardano-node/master/configuration/cardano"
+wget -N ${BASE_URL}/${NODE_CONFIG}-config.json
+wget -N ${BASE_URL}/${NODE_CONFIG}-byron-genesis.json
+wget -N ${BASE_URL}/${NODE_CONFIG}-shelley-genesis.json
+wget -N ${BASE_URL}/${NODE_CONFIG}-alonzo-genesis.json
+wget -N ${BASE_URL}/${NODE_CONFIG}-conway-genesis.json
+wget -N ${BASE_URL}/${NODE_CONFIG}-topology.json
+wget -N https://raw.githubusercontent.com/IntersectMBO/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
 ```
 
 Run the following to modify $\{NODE\_CONFIG}-config.json and update TraceBlockFetchDecisions to "true" & listen on all interfaces with Prometheus Node Exporter.
@@ -447,11 +448,11 @@ source ${HOME}/.adaenv
 
 ## Build Libsodium
 
-This is IOHK's fork of Libsodium. It is needed for the dynamic build binary of cardano-node.
+This is Intersect's fork of Libsodium. It is needed for the dynamic build binary of cardano-node.
 
 ```bash
 cd; cd git/
-git clone https://github.com/input-output-hk/libsodium
+git clone https://github.com/IntersectMBO/libsodium
 cd libsodium
 git checkout 66f017f1
 ./autogen.sh
@@ -551,31 +552,30 @@ curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 ```bash
 . ~/.bashrc
 ghcup upgrade
-ghcup install cabal 3.4.0.0
-ghcup set cabal 3.4.0.0
+ghcup install cabal 3.12.1.0
+ghcup set cabal 3.12.1.0
 
-ghcup install ghc 8.10.4
-ghcup set ghc 8.10.4
+ghcup install ghc 9.6.7
+ghcup set ghc 9.6.7
 ```
 
 ### Obtain cardano-node
 
 ```bash
 cd $HOME/git
-git clone https://github.com/input-output-hk/cardano-node.git
+git clone https://github.com/IntersectMBO/cardano-node.git
 cd cardano-node
 git fetch --all --recurse-submodules --tags
-git checkout $(curl -s https://api.github.com/repos/input-output-hk/cardano-node/releases/latest | jq -r .tag_name)
+git checkout $(curl -s https://api.github.com/repos/IntersectMBO/cardano-node/releases/latest | jq -r .tag_name)
 ```
 
-Configure with 8.10.4 set libsodium
+Configure with GHC 9.6.
 
 ```bash
-cabal configure -O0 -w ghc-8.10.4
+cabal configure -O0 -w ghc-9.6.7
 
-echo -e "package cardano-crypto-praos\n flags: -external-libsodium-vrf" > cabal.project.local
 sed -i $HOME/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
-rm -rf dist-newstyle/build/aarch64-linux/ghc-8.10.4
+rm -rf dist-newstyle/build/aarch64-linux/ghc-9.6.7
 
 ```
 

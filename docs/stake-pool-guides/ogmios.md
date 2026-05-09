@@ -20,7 +20,7 @@ mkdir ~/tmp
 cd ~/tmp
 
 # Replace URL with current release/architecture link.
-wget https://github.com/CardanoSolutions/ogmios/releases/download/v6.3.0/ogmios-v6.3.0-aarch64-linux.zip
+wget https://github.com/CardanoSolutions/ogmios/releases/download/v6.14.0/ogmios-v6.14.0-aarch64-linux.zip
 unzip ogmios-*
 mv ~/tmp/ogmios/bin/ogmios ~/.local/bin
 chmod +x ~/.local/bin/ogmios

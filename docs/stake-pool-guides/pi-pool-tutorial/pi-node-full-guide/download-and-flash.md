@@ -48,13 +48,13 @@ Locate your target drive & write it to disk.
 
 ![](/img/custom-os.png)
 </TabItem>
-<TabItem value="Fresh Ubuntu 22.04 LTS installation" label="Fresh Ubuntu 22.04 LTS installation">
+<TabItem value="Fresh Ubuntu 24.04 LTS installation" label="Fresh Ubuntu 24.04 LTS installation">
 
 **Within Raspberry Pi Imager**
 
-**Download Ubuntu Server 22.04 (RPI 3/4/400)**
+**Download Ubuntu Server 24.04 (RPI 3/4/400)**
 
-[Raspberry Pi Generic (64-bit ARM) preinstalled server image](https://cdimage.ubuntu.com/ubuntu-server/jammy/daily-preinstalled/current/jammy-preinstalled-server-arm64+raspi.img.xz)
+[Raspberry Pi Generic (64-bit ARM) preinstalled server image](https://cdimage.ubuntu.com/ubuntu-server/noble/daily-preinstalled/current/noble-preinstalled-server-arm64+raspi.img.xz)
 
 **Choose OS -> Use custom**
 
