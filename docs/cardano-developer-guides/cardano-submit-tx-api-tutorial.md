@@ -22,20 +22,17 @@ If you've set up your node using our [docker image guide](https://docs.armada-al
 
 ## Download and Install Cardano Submit API
 
-Download the latest version of the Cardano node, cli, and tx-submit-api from the [Armada Alliance Github repository](https://github.com/armada-alliance/cardano-node-binaries).
+Download the latest version of the Cardano node, cli, and tx-submit-api from the [Armada Alliance Github repository](https://github.com/armada-alliance/cardano-node-binaries). Install `zstd` first if needed (`sudo apt install zstd`).
 
 ```bash title=">_ Terminal"
-wget -O 8_1_2.zip https://github.com/armada-alliance/cardano-node-binaries/blob/main/static-binaries/8_1_2.zip?raw=true
+wget -c https://github.com/armada-alliance/cardano-node-binaries/blob/main/static-binaries/cardano-10_7_1-aarch64-static-musl-ghc_9122.tar.zst?raw=true -O - | tar -I zstd -xv
 ```
 
-Unzip the contents of the zip file.
+Move `cardano-submit-api` into your PATH.
 
 ```bash title=">_ Terminal"
-unzip 8_1_2.zip -d cardano-node-8.9.3
-```
-
-```bash title=">_ Terminal"
-mv cardano-node-8.9.3/cardano-node/cardano-submit-api ~/.local/bin/
+mv ~/cardano-node/cardano-submit-api ~/.local/bin/
+rm -r ~/cardano-node
 ```
 
 ## Make a simple bash script to run the Cardano Submit API
@@ -76,7 +73,7 @@ chmod +x ~/.local/bin/tx-submit-service
 ## Get the tx-submit-mainnet-config.yaml file from IOG's github repository
 
 ```bash title=">_ Terminal"
-cd ~/pi-pool/files && wget -O tx-submit-mainnet-config.yaml https://raw.githubusercontent.com/input-output-hk/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
+cd ~/pi-pool/files && wget -O tx-submit-mainnet-config.yaml https://raw.githubusercontent.com/IntersectMBO/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
 ```
 
 ## Test the Cardano Submit API

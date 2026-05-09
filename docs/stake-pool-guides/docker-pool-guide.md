@@ -4,6 +4,10 @@ description: Running a Cardano full node with a Docker image
 
 # Cardano Node Docker Image for ARM64 devices 🐳
 
+:::warning
+The `armadaalliance/armada-cn` Docker image is no longer actively maintained. The latest published tag is **8.7.2**. For a current node deployment, use the [static build guide](./updating-a-cardano-node/static-build.mdx) or the [pi-pool tutorial](./pi-pool-tutorial/) instead.
+:::
+
 In this project you will find the instructions to build a docker image on Linux containing all the needed files to run a Cardano full node.
 The docker image can run on any arm64 device such as a Mac Mini M1. The node can be configured as a relay or block production node.
 
@@ -94,7 +98,7 @@ sudo curl -O -J https://book.world.dev.cardano.org/environments/${NODE_CONFIG}/b
 sudo curl -O -J https://book.world.dev.cardano.org/environments/${NODE_CONFIG}/shelley-genesis.json
 sudo curl -O -J https://book.world.dev.cardano.org/environments/${NODE_CONFIG}/alonzo-genesis.json
 sudo curl -O -J https://book.world.dev.cardano.org/environments/${NODE_CONFIG}/conway-genesis.json
-sudo wget -O tx-submit-mainnet-config.yaml https://raw.githubusercontent.com/input-output-hk/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
+sudo wget -O tx-submit-mainnet-config.yaml https://raw.githubusercontent.com/IntersectMBO/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
 ```
 
 :::tip
@@ -127,7 +131,7 @@ Either way, the docker image includes:
 Pull the image with:
 
 ```bash
-docker pull armadaalliance/armada-cn:8.9.3
+docker pull armadaalliance/armada-cn:8.7.2
 ```
 
 You should see your Cardano node docker image in the list:
@@ -138,7 +142,7 @@ docker images
 
 ```bash
 REPOSITORY              TAG            IMAGE ID       CREATED          SIZE
-armadaalliance/armada-cn        8.9.3         da4414775ce6   37 seconds ago   700MB
+armadaalliance/armada-cn        8.7.2         da4414775ce6   37 seconds ago   700MB
 ```
 
 You can now proceed with chapter 4, in order to start the node.
@@ -161,7 +165,7 @@ You should see your Cardano node docker image in the list, e.g.
 
 ```bash title=">_ Terminal"
 REPOSITORY              TAG            IMAGE ID       CREATED          SIZE
-armadaalliance/armada-cn        8.9.3         da4414775ce6   37 seconds ago   700MB
+armadaalliance/armada-cn        8.7.2         da4414775ce6   37 seconds ago   700MB
 <none>                  <none>         f3891eef21e4   3 minutes ago    1.09GB
 ```
 
@@ -197,7 +201,7 @@ Important: Change the directory paths CN_CONFIG_PATH and CN_DB_PATH to the corre
 ```bash title=">_ Terminal"
 ##Configuration for relay and block producing node
 CNIMAGENAME="armada/armada-cn"                                   ## Name of the Cardano docker image
-CNVERSION="8.9.3"                                                ## Version of the cardano-node. It must match with the version of the docker i>
+CNVERSION="8.7.2"                                                ## Version of the cardano-node. It must match with the version of the docker i>
 CNNETWORK="preprod"                                              ## Use "mainnet" if connecting node to the mainnet
 CNMODE="relay"                                                   ## Use "bp" if you configure the node as block production node
 CNPORT="3001"                                                    ## Define the port of the node
@@ -234,7 +238,7 @@ If the docker node started successfully, you might see something like this:
 
 ```bash title=">_ Terminal"
 CONTAINER ID   IMAGE                     COMMAND                  CREATED          STATUS                    PORTS                                                                                      NAMES
-fed0cfbf7d86   armadaalliance/armada-cn:8.9.3   "bash title=">_ Terminal" -c /home/carda…"   12 seconds ago   Up 10 seconds (healthy)   0.0.0.0:3001->3001/tcp, :::3001->3001/tcp, 0.0.0.0:12799->12798/tcp, :::12799->12798/tcp   cardano-node-testnet-1.34.1
+fed0cfbf7d86   armadaalliance/armada-cn:8.7.2   "bash title=">_ Terminal" -c /home/carda…"   12 seconds ago   Up 10 seconds (healthy)   0.0.0.0:3001->3001/tcp, :::3001->3001/tcp, 0.0.0.0:12799->12798/tcp, :::12799->12798/tcp   cardano-node-testnet-1.34.1
 ```
 
 You can also check the logs of the running cardano-node:

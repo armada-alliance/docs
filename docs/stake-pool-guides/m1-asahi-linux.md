@@ -1,15 +1,16 @@
-# Apple M1 Asahi Linux
+# Apple Silicon Asahi Linux
 
-## Prerequisites 
+## Prerequisites
 
-Asahi Arch Linux, minimal or desktop installed on your M1 or M2. You can also use the Asahi installer to create a UEFI boot partition that will allow you to install any operating system. That does not mean it will run. A list of alternative distros can be found here.
+Asahi Linux (Fedora Asahi Remix is the primary supported distro) installed on your M1, M2, M3, or M4. You can also use the Asahi installer to create a UEFI boot partition that allows installing other distributions. A list of alternative distros can be found here.
 https://github.com/AsahiLinux/docs/wiki/SW%3AAlternative-Distros
 
-
-** This guide is for Asahi Arch Linux. **
+:::info
+Asahi Linux is no longer in alpha. **Fedora Asahi Remix** is now the recommended and most actively maintained distribution. This guide uses Asahi Arch Linux; adapt package manager commands (`pacman` → `dnf`) if using Fedora Asahi Remix.
+:::
 
 :::tip
-Be sure to log in and fully update MacOS before starting. Open this guide in the M1 MacOS. 
+Be sure to log in and fully update macOS before starting. Open this guide in macOS.
 :::
 
 :::info
@@ -19,7 +20,7 @@ Desktop version does not have the default alarm user, the user of your choice is
 :::
 
 ### Start by installing Asahi Linux by following the link below
-[Asahi Alpha Release Notes](https://asahilinux.org/2022/03/asahi-linux-alpha-release/)
+[Asahi Linux](https://asahilinux.org)
 
 :::info
 
@@ -463,11 +464,11 @@ sed -i config.json \
 
 ## Build Libsodium
 
-This is IOHK's fork of Libsodium. It is needed for the dynamic build binary of cardano-node.
+This is Intersect's fork of Libsodium. It is needed for the dynamic build binary of cardano-node.
 
 ```bash title=">_ Terminal"
 cd; cd git/
-git clone https://github.com/input-output-hk/libsodium
+git clone https://github.com/IntersectMBO/libsodium
 cd libsodium
 git checkout 66f017f1
 ./autogen.sh
@@ -516,13 +517,11 @@ sudo ldconfig; ldconfig -p | grep secp256k1
 
 ## blst
 
-Needed for 8.3.0-pre and above.
-
 ```bash title=">_ Terminal"
 cd ~/git
 git clone https://github.com/supranational/blst
 cd blst
-git checkout v0.3.10
+git checkout v0.3.15
 ./build.sh
 sudo nano /usr/local/lib/pkgconfig/libblst.pc
 ```
@@ -538,7 +537,7 @@ includedir=$\{%prefix}/include
 Name: libblst
 Description: Multilingual BLS12-381 signature library
 URL: https://github.com/supranational/blst
-Version: 0.3.10
+Version: 0.3.15
 Cflags: -I$\{%includedir}
 Libs: -L$\{%libdir} -lblst
 
@@ -585,11 +584,11 @@ curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 ```bash title=">_ Terminal"
 . ~/.bashrc
 ghcup upgrade
-ghcup install cabal 3.6.2.0
-ghcup set cabal 3.6.2.0
+ghcup install cabal 3.12.1.0
+ghcup set cabal 3.12.1.0
 
-ghcup install ghc 8.10.7
-ghcup set ghc 8.10.7
+ghcup install ghc 9.6.7
+ghcup set ghc 9.6.7
 ```
 
 Confirm.
@@ -603,21 +602,20 @@ ghc --version
 
 ```bash title=">_ Terminal"
 cd $HOME/git
-git clone https://github.com/input-output-hk/cardano-node.git
+git clone https://github.com/IntersectMBO/cardano-node.git
 cd cardano-node
 git fetch --all --recurse-submodules --tags
-git checkout $(curl -s https://api.github.com/repos/input-output-hk/cardano-node/releases/latest | jq -r .tag_name)
+git checkout $(curl -s https://api.github.com/repos/IntersectMBO/cardano-node/releases/latest | jq -r .tag_name)
 ```
 
-Configure with 8.10.7 & set libsodium
+Configure with GHC 9.6.
 
 ```bash title=">_ Terminal"
 cabal update
-cabal configure -O0 -w ghc-8.10.7
+cabal configure -O0 -w ghc-9.6.7
 
-echo -e "package cardano-crypto-praos\n flags: -external-libsodium-vrf" > cabal.project.local
 sed -i $HOME/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
-rm -rf dist-newstyle/build/aarch64-linux/ghc-8.10.7
+rm -rf dist-newstyle/build/aarch64-linux/ghc-9.6.7
 ```
 
 Build cardano-cli cardano-node.

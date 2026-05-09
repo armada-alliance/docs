@@ -7,10 +7,14 @@
 This page will consist of hardware necessary for running a stake pool or relay node on the cardano blockchain for both testnet and mainnet use.
 
 
-As of `October 2022` the cardano-node/cli software requirements are:
+As of `May 2025` the cardano-node/cli software requirements are (node 11.0.1):
 
 :::caution
 #### The RAM, CPU, and Data Storage resource requirements are much higher for mainnet vs testnet. If you decide to use a Raspberry Pi 4 or any other single board computer with limited RAM on mainnet you will experience downtime due to things like garbage collection or end of epoch calculations and need to monitor your node frequently to restart it once it hits its limits.
+:::
+
+:::danger
+#### As of node 11.0.1, the LSM storage backend (OnDisk) has a known crash bug on resource-constrained devices such as the Raspberry Pi. Until this is resolved in a future release, Raspberry Pi users should not upgrade to 11.x for mainnet block production.
 :::
 
 ## Testnet
@@ -19,9 +23,9 @@ As of `October 2022` the cardano-node/cli software requirements are:
 | 2 or more cores | 4GB or more | 75GB or more       |
 
 ## Mainnet
-| CPU             | RAM          | Disk Space/Storage |
-|-----------------|--------------|--------------------|
-| 4 or more cores | 16GB or more | 150GB or more      |
+| CPU             | RAM                                               | Disk Space/Storage      |
+|-----------------|---------------------------------------------------|-------------------------|
+| 4 or more cores | 24GB or more (InMemory backend) / 8GB (OnDisk)    | 300GB or more (350GB recommended) |
 
 
 

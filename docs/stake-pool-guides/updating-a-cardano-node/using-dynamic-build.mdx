@@ -5,13 +5,17 @@ import TabItem from "@theme/TabItem";
 
 **We at the Armada Alliance actively build the required software packages needed to run a Cardano stake pool node on ARM-based computers like the Raspberry Pi or Apple's MacMini M1.**_
 
+:::warning
+#### Dynamic binaries from the Armada Alliance repo are no longer actively maintained past 8.2.1. Use the [Static Build guide](./static-build.mdx) for the latest ARM64 node binaries.
+:::
+
 :::caution
 #### To use our dynamic arm64 cardano-node build requires libsodium and secp256k1.
 :::
 
 
 :::success
-#### Current Official Cardano Node Version: [8.9.3](https://github.com/input-output-hk/cardano-node)
+#### Current Official Cardano Node Version: [10.7.1](https://github.com/IntersectMBO/cardano-node)
 :::
 
 ### Overview 🗒
@@ -66,7 +70,7 @@ cd ~/src
 Download and install libsodium:
 
 ```bash title=">_ Terminal"
-git clone https://github.com/input-output-hk/libsodium
+git clone https://github.com/IntersectMBO/libsodium
 ```
 
 ```bash title=">_ Terminal"
@@ -144,8 +148,12 @@ This ensures the system is aware of libsodium (not just at the user level).
 
 Dynamic binaries and Cardano node configuration files provided by [SRN pool ](https://armada-alliance.com/stake-pools/cc1b1c03798884c636703443a23b8d9e827d6c0417921600394198a0):pray: at our [Github repository](https://github.com/armada-alliance/cardano-node-binaries).
 
+:::danger
+Dynamic binaries are no longer published past 8.2.1. This download will fail. Switch to the [Static Build guide](./static-build.mdx) instead.
+:::
+
 ```bash title=">_ Terminal"
-wget -O cardano-8_1_2-aarch64-ubuntu_2004.zip https://github.com/armada-alliance/cardano-node-binaries/blob/main/dynamic-binaries/8.9.3/cardano-8_1_2-aarch64-ubuntu_2004.zip?raw=true
+wget -O cardano-8_1_2-aarch64-ubuntu_2004.zip https://github.com/armada-alliance/cardano-node-binaries/blob/main/dynamic-binaries/8.2.1/cardano-8_1_2-aarch64-ubuntu_2004.zip?raw=true
 ```
 
 Extract the content from the zip file.
@@ -190,7 +198,7 @@ cardano-node --version
 #### Output:
 
 ```bash title=">_ Terminal"
-cardano-node 8.9.3 - linux-aarch64 - ghc-8.10
+cardano-node 8.2.1 - linux-aarch64 - ghc-8.10
 git rev d2d90b48c5577b4412d5c9c9968b55f8ab4b9767
 ```
 
@@ -203,7 +211,7 @@ cardano-cli --version
 #### Output:
 
 ```bash title=">_ Terminal"
-cardano-cli 8.9.3 - linux-aarch64 - ghc-8.10
+cardano-cli 8.2.1 - linux-aarch64 - ghc-8.10
 git rev d2d90b48c5577b4412d5c9c9968b55f8ab4b9767
 ```
 

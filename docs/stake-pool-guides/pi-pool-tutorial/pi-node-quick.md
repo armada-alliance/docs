@@ -55,12 +55,14 @@ sed -i .adaenv -e "s/NODE_CONFIG=testnet/NODE_CONFIG=mainnet/g"; source .adaenv
 
 ```bash title=">_ Terminal"
 cd $NODE_FILES
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-config.json
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-byron-genesis.json
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-shelley-genesis.json
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-alonzo-genesis.json
-wget -N https://hydra.iohk.io/build/${NODE_BUILD_NUM}/download/1/${NODE_CONFIG}-topology.json
-wget -N https://raw.githubusercontent.com/input-output-hk/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
+BASE_URL="https://book.world.dev.cardano.org/environments/${NODE_CONFIG}"
+wget -N ${BASE_URL}/config.json && mv config.json ${NODE_CONFIG}-config.json
+wget -N ${BASE_URL}/byron-genesis.json && mv byron-genesis.json ${NODE_CONFIG}-byron-genesis.json
+wget -N ${BASE_URL}/shelley-genesis.json && mv shelley-genesis.json ${NODE_CONFIG}-shelley-genesis.json
+wget -N ${BASE_URL}/alonzo-genesis.json && mv alonzo-genesis.json ${NODE_CONFIG}-alonzo-genesis.json
+wget -N ${BASE_URL}/conway-genesis.json && mv conway-genesis.json ${NODE_CONFIG}-conway-genesis.json
+wget -N ${BASE_URL}/topology.json && mv topology.json ${NODE_CONFIG}-topology.json
+wget -N https://raw.githubusercontent.com/IntersectMBO/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
 ```
 
 Run the following to modify $\{NODE_CONFIG}-config.json and update TraceBlockFetchDecisions to "true" & listen on all interfaces with Prometheus Node Exporter.
